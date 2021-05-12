@@ -1,12 +1,63 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter as Router,Switch,Route,Redirect} from 'react-router-dom'
+import Authentication from './components/Authorization/Authentication';
+import App from './App'
+import fire from './config/firebase';
+import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import {Provider,connect} from 'react-redux';
+import {createStore} from 'redux'; 
+import {combinedReducers} from './store/reducer';
+import {setUser} from './store/actions';
+
+const store = createStore(combinedReducers);
+
+const Index = (props) => {
+
+  useEffect(() => {
+    fire.auth().onAuthStateChanged((user) => {
+      if (user) {
+        props.setUser(user);
+        props.history.push("/");
+      } else {
+        props.setUser(null);
+        props.history.push("/Authentication");
+      }
+    })
+  }, []);
+
+  console.log(props.currentUser);
+
+  return( 
+  <Switch>
+    <Route path="/Authentication" component={Authentication} />
+    <Route path="/" component={App}/>
+  </Switch>)
+}
+
+const mapStateToProps = (state) => {
+  return{
+    currentUser : state.user.currentUser
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    setUser : (user) => {dispatch(setUser(user))}
+  }
+}
+
+const IndexWithRouter = withRouter(connect(mapStateToProps,mapDispatchToProps)(Index));
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <Router>
+        <IndexWithRouter />
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
