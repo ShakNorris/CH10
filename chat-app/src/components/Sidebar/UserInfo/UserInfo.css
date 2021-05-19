@@ -1,0 +1,26 @@
+.userInfo-row{
+    padding:15px;
+}
+.ui.header .logo{
+    text-align: center;
+}
+.ui.header .logo img{
+    width:100px;
+}
+.userInfo .ui.image {
+    border-radius:20px;
+    width:40px;
+    display:block;
+}
+.ui.dropdown p{
+    display:inline-block;
+    margin-left:8px;
+    font-size:15px;
+    position:relative;
+    margin-top:10px;
+    color:#6e093c
+}
+.ui.dropdown span{
+    display:flex;
+    flex-wrap: wrap;
+}

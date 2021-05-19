@@ -1,0 +1,11 @@
+.fileModal .ui.button{
+    background: #e73d92 !important;
+    color:white;
+}
+.fileModal input
+{
+    color:black !important;
+}
+.fileInput{
+    width:100%;
+}

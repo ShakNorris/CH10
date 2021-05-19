@@ -1,0 +1,14 @@
+.InputButton .ui.button{
+    width: 50px!important;
+    height:50px;
+    background: #e73d92 !important;
+    color:white;
+}
+/* .InputSegment {
+    width:1000px!important;
+} */
+/* .InputSegment .ui.input{
+    width:975px;
+    height:60px;
+    padding-bottom:10px;
+} */

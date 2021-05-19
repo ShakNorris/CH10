@@ -1,5 +1,10 @@
-.sidebar{
-    background-color:#e73d92;
-    font-size: 1.2rem;
-    overflow-y: scroll;
+.side-bar{
+    background-color:#e73d92 !important;
+    font-size: 1.2rem !important;
+}
+.displayUser{
+    -webkit-user-select: none;      
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

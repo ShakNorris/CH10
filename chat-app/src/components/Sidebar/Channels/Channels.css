@@ -1,0 +1,29 @@
+.channelModal form.ui.form input[type='text']
+{
+    color:black !important;
+}
+.channelModal .ui.button{
+    background: #e73d92 !important;
+    color:white;
+}
+
+.ui.menu .item{
+    color:#6e093c !important;
+    font-size:16px !important;
+}
+.clickable:hover
+{
+    cursor: pointer;
+}
+.ui.menu .item.active{
+    animation: activeanim 0.5s !important
+}
+
+@keyframes activeanim {
+    from{
+        background:#e73d92 !important;
+    }
+    to{
+        background:#b9307594 !important;
+    }
+}

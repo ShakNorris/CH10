@@ -11,6 +11,7 @@ import {Provider,connect} from 'react-redux';
 import {createStore} from 'redux'; 
 import {combinedReducers} from './store/reducer';
 import {setUser} from './store/actions';
+import "semantic-ui-css/semantic.min.css"
 
 const store = createStore(combinedReducers);
 

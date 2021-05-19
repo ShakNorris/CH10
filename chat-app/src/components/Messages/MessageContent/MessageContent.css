@@ -1,0 +1,23 @@
+.ui.comments .comment .metadata{
+    display:inline;
+}
+.ui.comments .comment .author{
+    width: 200px;
+    display:inline
+}
+.ui.comments .comment .avatar{
+    width: 40px !important;
+}
+.ui.comments .comment .text{
+    font-size: 16px !important;
+}
+.topContent{
+    padding-top:2px;
+    -webkit-user-select: none;      
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.sentContent .ui.image {
+    width:600px;
+}

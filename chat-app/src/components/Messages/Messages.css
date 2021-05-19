@@ -1,0 +1,11 @@
+.Messages{
+    padding-top:10px;
+}
+.Messages .ui.segment:nth-child(2){
+    height:490px;
+    overflow-y: auto !important;
+    overflow-x:hidden
+}
+.messageContent{
+    width:1140px;
+}
