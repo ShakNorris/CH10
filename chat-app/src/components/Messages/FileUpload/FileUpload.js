@@ -26,7 +26,7 @@ const FileUpload = (props) =>
 
     return(
         <Modal basic open={props.open} onClose={props.onClose} className="fileModal">
-            <Modal.Header>Select a file</Modal.Header>
+            <Modal.Header>Send a file</Modal.Header>
             <Modal.Content>
                 <Input
                 name="file"

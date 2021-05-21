@@ -107,7 +107,9 @@ const Messages = (props) => {
         favorite={isFavorite()}
         isPrivateChat={props.channel?.isPrivateChat} 
         searchTermChange={searchTermChange} 
-        channelName={props.channel?.name} 
+        channelName={props.channel?.name}
+        userPhoto={props.channel?.photoURL} 
+        channelDescripiton = {props.channel?.description}
         uniqueUsers={uniqueUsersCount()}/>
     <Segment class="messageContent">
         <Comment.Group>

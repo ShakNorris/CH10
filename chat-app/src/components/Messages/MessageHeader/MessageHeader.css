@@ -4,3 +4,20 @@
 .favoriteButton{
     cursor:pointer
 }
+.description{
+    color:grey;
+    font-size:20px;
+}
+.userAvatar{
+    float:left;
+    width:60px;
+    margin-top:5px;
+}
+.channelName{
+    display:inline-block;
+}
+.userName{
+    display:inline-block;
+    margin-left:5px;
+    margin-top:10px;
+}

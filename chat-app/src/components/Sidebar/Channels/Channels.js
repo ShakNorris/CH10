@@ -126,7 +126,7 @@ const Channels = (props) => {
             {displayChannels()}
             <Menu.Item>
                 <span>
-                    <Icon className="clickable" name="add" onClick={openModal}>Add</Icon>
+                    <Icon style={{fontWeight: 'bold' }}className="clickable" name="add" onClick={openModal}>ADD</Icon>
                 </span>
             </Menu.Item>
         </Menu.Menu>
