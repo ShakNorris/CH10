@@ -7,8 +7,10 @@ const MessageHeader = (props) =>{
     <Segment>
         <Header floated="left" fluid="true" as="h2">
             <span>
-                {props.isPrivateChat && <Image className="userAvatar" src={props.userPhoto} />}
-                {props.isPrivateChat && <div className="userName">{props.channelName}</div>}
+                <div>
+                    {props.isPrivateChat && <Image className="userAvatar" src={props.userPhoto} />}
+                    {props.isPrivateChat && <div className="userName">{props.channelName}</div>}
+                </div>
                 <div className="channelName">{!props.isPrivateChat && "# " + props.channelName}</div>
                 {!props.isPrivateChat && <Icon className="favoriteButton" onClick={props.favoriteChannel} 
                 name={props.favorite ? "star" : "star outline"}

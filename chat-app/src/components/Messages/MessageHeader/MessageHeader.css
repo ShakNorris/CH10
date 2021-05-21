@@ -12,6 +12,7 @@
     float:left;
     width:60px;
     margin-top:5px;
+    vertical-align: middle;
 }
 .channelName{
     display:inline-block;
@@ -19,5 +20,5 @@
 .userName{
     display:inline-block;
     margin-left:5px;
-    margin-top:10px;
+    margin-top:5px;
 }
