@@ -7,7 +7,7 @@ const MessageHeader = (props) =>{
     <Segment>
         <Header floated="left" fluid="true" as="h2">
             <span>
-                <div>
+                <div className="chatInfo">
                     {props.isPrivateChat && <Image className="userAvatar" src={props.userPhoto} />}
                     {props.isPrivateChat && <div className="userName">{props.channelName}</div>}
                 </div>

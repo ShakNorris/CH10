@@ -8,7 +8,7 @@ const FileUpload = (props) =>
 
     const [file,setFile] = useState(null);
 
-    const acceptedPhotoTypes = ["image/png","image/jpeg","image/jpg"]
+    const acceptedPhotoTypes = ["image/png","image/jpeg","image/jpg","image/gif"]
     const onFileAdded = (e) =>{
         const file = e.target.files[0];
         if(file){

@@ -6,19 +6,28 @@
 }
 .description{
     color:grey;
-    font-size:20px;
+    font-size:18px;
 }
 .userAvatar{
-    float:left;
-    width:60px;
+    /* float:left; */
+    display:inline-block !important;
+    width:64px;
     margin-top:5px;
-    vertical-align: middle;
+    border-radius:35px;
+    vertical-align: middle !important;
 }
 .channelName{
     display:inline-block;
 }
 .userName{
-    display:inline-block;
     margin-left:5px;
-    margin-top:5px;
+    display:inline-block;
+    vertical-align: middle;
+}
+.chatInfo{
+    display:inline-block;
+    -webkit-user-select: none;      
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
