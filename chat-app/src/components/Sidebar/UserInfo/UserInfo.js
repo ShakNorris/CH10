@@ -18,14 +18,15 @@ const signOut = () =>{
 const UserInfo = (props) =>{
     if(props.user){
         return(
+            <div className="UserInfo">
+            <Header inverted as="h1">
+                <p className="logo">
+                    <img src={process.env.PUBLIC_URL + '/HomerBanner2.jpg'}/>
+                </p>
+            </Header>
             <Grid>
                 <Grid.Column>
                     <Grid.Row className="userInfo-row">
-                        <Header inverted as="h1">
-                            <p className="logo">
-                                <img src={process.env.PUBLIC_URL + '/HomerMain.png'}/>
-                            </p>
-                        </Header>
                         <Header inverted as="h4" className="displayUser">
                             <Dropdown icon={null}
                             trigger={
@@ -39,6 +40,7 @@ const UserInfo = (props) =>{
                     </Grid.Row>
                 </Grid.Column>
             </Grid>
+            </div>
         )
     }
     return null;

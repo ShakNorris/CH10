@@ -18,6 +18,12 @@
     -ms-user-select: none;
     user-select: none;
 }
-.sentContent .ui.image {
-    width:600px;
+.sentContent > .ui.image {
+    width: auto;
+    max-width: 500px;
+    height: auto;    
+    -webkit-user-select: none;      
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

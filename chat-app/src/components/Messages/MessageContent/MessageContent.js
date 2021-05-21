@@ -19,7 +19,7 @@ const MessageContent = (props) =>{
                 <Comment.Metadata class="time">{timeAgo.format(props.message.timestamp)}</Comment.Metadata>
             </div>
             <div className="sentContent">
-                {props.message.image ? <Image src={props.message.image} /> :
+                {props.message.image ? <Image onLoad={props.imageLoaded} src={props.message.image} /> :
                 <Comment.Text>{props.message.content}</Comment.Text>}
             </div>
         </Comment.Content>

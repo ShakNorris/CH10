@@ -4,21 +4,24 @@
 .ui.header .logo{
     text-align: center;
 }
+.userInfo{
+    display: flex;
+    align-items:center;
+}
 .ui.header .logo img{
-    width:100px;
+    width:240px;
 }
 .userInfo .ui.image {
-    border-radius:20px;
-    width:40px;
-    display:block;
+    border-radius:30px;
+    width:45px;
+    display:inline-block;
 }
 .ui.dropdown p{
     display:inline-block;
     margin-left:8px;
     font-size:15px;
-    position:relative;
-    margin-top:10px;
-    color:#6e093c
+    color:#867303;
+    font-weight:bold;
 }
 .ui.dropdown span{
     display:flex;

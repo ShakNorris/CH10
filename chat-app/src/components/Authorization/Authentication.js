@@ -107,13 +107,17 @@ const Authentication = () => {
         }
     }
 
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
     const updateuserDetails = (createdUser) => {
         if (createdUser) {
             setIsLoading(true);
             createdUser.user
                 .updateProfile({
                     displayName: userState.userName,
-                    photoURL: `http://gravatar.com/avatar/${createdUser.user.uid}?d=identicon`
+                    photoURL: `http://gravatar.com/avatar/${getRandomInt(1000)}?d=identicon`
                 })
                 .then(() => {
                     setIsLoading(false);

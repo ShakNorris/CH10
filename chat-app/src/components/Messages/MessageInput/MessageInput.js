@@ -15,8 +15,6 @@ const MessageInput = (props) =>{
     const [message,setMessage] = useState("")
     const [fileDialog,setFileDialog] = useState(false)
 
-
-
     const createMessageInfo = (downloadUrl) =>{
         return{
             user : {
@@ -30,10 +28,20 @@ const MessageInput = (props) =>{
         }
     }
 
+    
     const sendMessage = (downloadUrl) =>{
-        if(message || downloadUrl){
+        if(downloadUrl){
             messagesRef.child(props.channel.id)
             .push().set(createMessageInfo(downloadUrl))
+            .then(() => setMessage(""))
+            .catch((err) => console.log(err))
+        }
+    }
+
+    const sendText = () => {
+        if(message){
+            messagesRef.child(props.channel.id)
+            .push().set(createMessageInfo())
             .then(() => setMessage(""))
             .catch((err) => console.log(err))
         }
@@ -47,11 +55,18 @@ const MessageInput = (props) =>{
     const actionButtons = () =>{
         return <>
         <div className="InputButton">
-            <Button icon="send" onClick={sendMessage()}/>
+            <Button icon="send"
+            onClick={sendText}/>
             <Button icon="upload" onClick={() => setFileDialog(true)}/>
         </div>
         </>
     }
+
+    const handleKeypress = e => {
+      if (e.which === 13) {
+        sendText();
+      }
+    };
 
     const uploadImage = (file,type) => {
         const filePath = `chat/images/${uuidv4()}.jpg`
@@ -70,7 +85,8 @@ const MessageInput = (props) =>{
         value={message}
         label={actionButtons()}
         labelPosition="right"
-        fluid="true"/>
+        fluid="true"
+        onKeyPress={handleKeypress}/>
         <FileUpload uploadImage={uploadImage} open={fileDialog} onClose={() => setFileDialog(false)}/>
     </Segment>
 }

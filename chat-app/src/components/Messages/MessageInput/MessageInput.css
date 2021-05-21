@@ -1,12 +1,17 @@
 .InputButton .ui.button{
     width: 50px!important;
     height:50px;
-    background: #e73d92 !important;
-    color:white;
+    background: #ffd900 !important;
+    color:black;
 }
-/* .InputSegment {
-    width:1000px!important;
-} */
+.InputButton .ui.button:hover{
+    animation: buttonClr 0.8s;
+}
+
+@keyframes buttonClr {
+    from {color: black;}
+    to {    color:rgb(109, 109, 109);}
+}
 /* .InputSegment .ui.input{
     width:975px;
     height:60px;

@@ -12,6 +12,7 @@ import {createStore} from 'redux';
 import {combinedReducers} from './store/reducer';
 import {setUser} from './store/actions';
 import "semantic-ui-css/semantic.min.css"
+import AppLoader from './components/AppLoader/AppLoader'
 
 const store = createStore(combinedReducers);
 
@@ -31,16 +32,19 @@ const Index = (props) => {
 
   console.log(props.currentUser);
 
-  return( 
+  return( <>
+  <AppLoader loading={props.loading && props.location.pathname === "/"} />
   <Switch>
     <Route path="/Authentication" component={Authentication} />
     <Route path="/" component={App}/>
-  </Switch>)
+  </Switch>
+  </>)
 }
 
 const mapStateToProps = (state) => {
   return{
-    currentUser : state.user.currentUser
+    currentUser : state.user.currentUser,
+    loading : state.channel.loading
   }
 }
 

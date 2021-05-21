@@ -1,3 +1,6 @@
 .msgHeader .ui.segment{
     height: 100px !important;
 }
+.favoriteButton{
+    cursor:pointer
+}
