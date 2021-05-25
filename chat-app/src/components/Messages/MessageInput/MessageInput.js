@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, createRef} from 'react';
 import {Segment,Header,Icon,Input,Button} from 'semantic-ui-react'
 import './MessageInput.css'
 import fire from '../../../config/firebase'
@@ -6,12 +6,17 @@ import firebase from 'firebase'
 import {connect} from 'react-redux'
 import FileUpload from '../FileUpload/FileUpload'
 import {v4 as uuidv4} from 'uuid'
+import Picker from 'emoji-picker-react';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+
 
 const MessageInput = (props) =>{
 
+    const inputRef = createRef();
     const messagesRef = fire.database().ref("messages");
     const storageRef = fire.storage().ref();
 
+    const [showEmojis,setShowEmojis] = useState(false);
     const [message,setMessage] = useState("")
     const [fileDialog,setFileDialog] = useState(false)
 
@@ -78,7 +83,26 @@ const MessageInput = (props) =>{
         .catch((err)=> console.log(err))
     }
 
+    const handleShowEmojis = () => {
+        if(showEmojis == true){
+            setShowEmojis(false);
+        }
+        else{
+            setShowEmojis(true);
+        }
+    }
+
+    const onEmojiClick = (event, emojiObject) => {
+        setMessage(message + emojiObject.emoji)
+    };
+
     return <Segment className="InputSegment">
+        <div className="emoji-toggler">
+            <InsertEmoticonIcon onClick={handleShowEmojis}/>
+        </div>
+        <div className="emoji-box">
+            {showEmojis && <Picker data-aos="fade-up" onEmojiClick={onEmojiClick} />}
+        </div>
         <Input
         onChange={MessageChange}
         name="message"
@@ -86,7 +110,7 @@ const MessageInput = (props) =>{
         label={actionButtons()}
         labelPosition="right"
         fluid="true"
-        onKeyPress={handleKeypress}/>
+        onKeyPress={handleKeypress}></Input>
         <FileUpload uploadImage={uploadImage} open={fileDialog} onClose={() => setFileDialog(false)}/>
     </Segment>
 }

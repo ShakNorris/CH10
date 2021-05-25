@@ -12,8 +12,23 @@
     from {color: black;}
     to {    color:rgb(109, 109, 109);}
 }
-/* .InputSegment .ui.input{
-    width:975px;
-    height:60px;
-    padding-bottom:10px;
-} */
+
+.emoji-toggler{
+    z-index: 99999;
+    cursor:pointer;
+    position:absolute;
+    top:28px;
+    right:130px;
+    opacity: 0.5;
+}
+
+.emoji-box{
+    z-index: 99999;
+    position:absolute;
+    bottom:55px;
+    right:130px;
+}
+
+.emoji-toggler:active{
+    color:#ffd900;
+}

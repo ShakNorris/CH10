@@ -1,3 +1,4 @@
-.ui.dimmer{
-    background-color:black;
+
+.loadingDimmer{
+    background-color: black !important;
 }

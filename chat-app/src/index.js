@@ -14,6 +14,7 @@ import {setUser} from './store/actions';
 import "semantic-ui-css/semantic.min.css"
 import AppLoader from './components/AppLoader/AppLoader'
 
+
 const store = createStore(combinedReducers);
 
 const Index = (props) => {

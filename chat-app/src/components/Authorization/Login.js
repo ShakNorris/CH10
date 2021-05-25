@@ -7,25 +7,16 @@ class Login extends Component {
     render(){
         const {
             userState,
-            setuserState,
             errorState,
-            seterrorState,
             isLoading,
-            setIsLoading,
             isSuccess,
-            setIsSuccess,
             handleGoogleAuth,
             hasAccount,
             setHasAccount,
             handleInput,
-            checkForm,
-            isFormEmpty,
             formaterrors,
-            checkPassword,
             onSubmitRegister,
             onSubmitLogin,
-            updateuserDetails,
-            saveUserInDB,
         } = this.props;
     
         return(

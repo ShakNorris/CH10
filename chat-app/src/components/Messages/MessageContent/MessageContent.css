@@ -22,8 +22,31 @@
     width: auto;
     max-width: 500px;
     height: auto;    
-    -webkit-user-select: none;      
+    -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    cursor:pointer;
 }
+.imageModal{
+    max-width:100%;
+    max-height: 100%;
+    width: 100% !important;
+    height: auto !important;
+}
+ .imageContent{
+    max-width:100%;
+    max-height: 100%;
+}
+.imageModal .imageContent .ui.image{
+    max-width:100%;
+    max-height: 100%;
+    margin:auto;
+}
+
+.imageButton .ui.button{
+    border-radius:40px;
+    width:50px;
+}
+
+.dimmer { background-color: rgba(0,0,0,0.9) !important}
