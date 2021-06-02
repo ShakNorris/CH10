@@ -9,10 +9,8 @@ import {v4 as uuidv4} from 'uuid'
 import Picker from 'emoji-picker-react';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 
-
 const MessageInput = (props) =>{
 
-    const inputRef = createRef();
     const messagesRef = fire.database().ref("messages");
     const storageRef = fire.storage().ref();
 
@@ -84,11 +82,11 @@ const MessageInput = (props) =>{
     }
 
     const handleShowEmojis = () => {
-        if(showEmojis == true){
-            setShowEmojis(false);
+        if(!showEmojis){
+            setShowEmojis(true);
         }
         else{
-            setShowEmojis(true);
+            setShowEmojis(false);
         }
     }
 
@@ -98,10 +96,10 @@ const MessageInput = (props) =>{
 
     return <Segment className="InputSegment">
         <div className="emoji-toggler">
-            <InsertEmoticonIcon onClick={handleShowEmojis}/>
+            <Button onClick={handleShowEmojis}><InsertEmoticonIcon className="emoji"/></Button>
         </div>
         <div className="emoji-box">
-            {showEmojis && <Picker data-aos="fade-up" onEmojiClick={onEmojiClick} />}
+            {showEmojis && <Picker onEmojiClick={onEmojiClick} />}
         </div>
         <Input
         onChange={MessageChange}

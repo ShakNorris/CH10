@@ -37,7 +37,7 @@ export const Notifications = (props) => {
             let lastVisited = visitedChannel[channelID]
             let channelMessageTS = messageTimeStamp[channelID]
             if(channelMessageTS){
-                let NotificationCount = channelMessageTS.filter(timestamp => !lastVisited || lastVisited < timestamp).length;
+                let NotificationCount = channelMessageTS.filter(timestamp => !lastVisited || lastVisited <= timestamp).length;
                 return NotificationCount === 0 ? null : <Label color="red">{NotificationCount}</Label>
             }
         }

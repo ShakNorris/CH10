@@ -13,14 +13,17 @@
     to {    color:rgb(109, 109, 109);}
 }
 
-.emoji-toggler{
+.emoji-toggler .ui.button{
     z-index: 99999;
     cursor:pointer;
     position:absolute;
-    top:28px;
-    right:130px;
+    top:18px;
+    right:110px;
     opacity: 0.5;
+    border: none !important;
+    background: none !important;
 }
+
 
 .emoji-box{
     z-index: 99999;
@@ -29,6 +32,6 @@
     right:130px;
 }
 
-.emoji-toggler:active{
+.emoji:focus{
     color:#ffd900;
 }
