@@ -1,10 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import {Grid,Image,Header, Icon, Modal,Form, Button} from 'semantic-ui-react'
+import {Grid,Image,Header, Icon, Modal,Form, Button, TextArea, Input} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import './UserInfo.css'
 import fire from '../../../config/firebase';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { setUser } from '../../../store/actions';
+
 
 const getDropDown = () =>{
     return[{
@@ -18,7 +20,10 @@ const signOut = () =>{
 }
 
 const UserInfo = (props) =>{
+    let usersRef = fire.database().ref('users');
+
     const [modalOpen,setModalOpen] = useState(false)
+    let userBio = "";
 
     const openModal = () => {
         setModalOpen(true);
@@ -32,6 +37,28 @@ const UserInfo = (props) =>{
         AOS.init();
         AOS.refresh();
     });
+
+    if(props.user?.uid){
+        usersRef.child(props.user.uid).on('value',snap=>{
+            userBio = snap.val().bio;
+        })
+    }
+
+    const BioChange = (e) => {
+        userBio = e.target.value;
+    }
+
+    const changeBio = () => {
+        usersRef.child(props.user.uid).on('value',snap=>{
+            snap.ref.update({bio: userBio}); 
+        })
+    }
+
+    const handleChangeBio = (e) => {
+        if (e.which === 13) {
+            changeBio();
+        }
+    }
 
     if(props.user){
         return(
@@ -54,13 +81,15 @@ const UserInfo = (props) =>{
                                     <Modal.Header>
                                         User Info
                                     </Modal.Header>
-                                    <Modal.Content>
+                                    <Modal.Content className="userInfoModal">
                                         <Image src={props.user.photoURL}/>
                                         <p>{props.user.displayName}</p>
+                                        <p>Bio</p>
+                                        <textarea onChange={BioChange} onKeyPress={handleChangeBio}>{userBio}</textarea>
                                     </Modal.Content>
                                     <Modal.Actions>
                                         <Button onClick={signOut} className="modalButton">
-                                            Log Out
+                                            <Icon name="sign-out" />Log Out
                                         </Button>
                                         <Button onClick={closeModal} className="modalButton">
                                             <Icon name="remove" />Close

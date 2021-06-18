@@ -30,3 +30,28 @@
     display:flex;
     flex-wrap: wrap;
 }
+.userInfoModal{
+    display:inline;
+}
+.userInfoModal img{
+    width:120px;
+    border-radius:60px;
+    display:inline-block !important;
+}
+.userInfoModal p{
+    display:inline-block !important;
+    margin-left:8px; 
+    font-size:21px;
+    color:black;
+    font-weight:bold;
+}
+.userInfoModal p:nth-child(3){
+    margin-top:10px;
+    display:block !important;
+    font-size:15px;
+}
+.userInfoModal textarea{
+    display: block;
+    width:100% !important;
+    height:200px;
+}

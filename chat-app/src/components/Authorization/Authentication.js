@@ -117,7 +117,7 @@ const Authentication = () => {
             createdUser.user
                 .updateProfile({
                     displayName: userState.userName,
-                    photoURL: `http://gravatar.com/avatar/${getRandomInt(1000)}?d=identicon`
+                    photoURL: `http://gravatar.com/avatar/${getRandomInt(1000)}?d=identicon`,
                 })
                 .then(() => {
                     setIsLoading(false);
@@ -134,7 +134,8 @@ const Authentication = () => {
         setIsLoading(true);
         userCollectionRef.child(createdUser.user.uid).set({
             displayName: createdUser.user.displayName,
-            photoURL: createdUser.user.photoURL
+            photoURL: createdUser.user.photoURL,
+            bio:"Nothing to see here — yet."
         })
             .then(() => {
                 setIsLoading(false);
