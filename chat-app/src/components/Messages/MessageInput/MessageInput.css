@@ -35,3 +35,65 @@
 .emoji:focus{
     color:#ffd900;
 }
+
+.gif-toggler img{
+    width:30px;
+    height:30px;
+    opacity: 0.5;
+}
+.gif-toggler .ui.button{
+    background: none;
+    position:absolute;
+    z-index: 99999;
+    top:13px;
+    right:170px;
+    opacity: 0.5;
+    width:30px;
+    height:30px;
+}
+.gif-toggler .ui.button:hover{
+    background:none;
+}
+.gif-toggler .ui.button:focus{
+    background:none;
+}
+.gifModal{
+    width:100% !important;
+    height:auto;
+}
+.gifHeader{
+    width:100%;
+    padding:20px;
+    display:flex;
+    justify-content: center;
+}
+.gifHeader .ui.button{
+    background: #ffd900 !important;
+    color:black;
+    margin-left:5px;
+}
+.gifHeader .ui.input{
+    width:400px;
+}
+.gifButton .ui.button{
+    border-radius:40px;
+    width:50px;
+}
+.gifResult{
+    padding:20px;
+    width:100% !important;
+}
+.gifResult .gifList{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.gifResult .gifList .gifItem{
+    margin:10px;
+    height:auto;
+    cursor: pointer;
+}
+
+.gifResult .gifList .GifItem img{
+    width:100%;
+}

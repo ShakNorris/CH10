@@ -16,14 +16,17 @@
     width:45px;
     display:inline-block;
 }
-.ui.dropdown p{
+.user{
+    cursor:pointer;
+}
+.user p{
     display:inline-block;
     margin-left:8px;
     font-size:15px;
     color:#867303;
     font-weight:bold;
 }
-.ui.dropdown span{
+.user span{
     display:flex;
     flex-wrap: wrap;
 }

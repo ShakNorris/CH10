@@ -6,6 +6,8 @@ import firebase from 'firebase'
 import { setChannel } from '../../../store/actions'
 import {Notifications} from '../Notifications/Notifications'
 import './Channels.css'
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Channels = (props) => {
     const [modalOpen,setModalOpen] = useState(false)
@@ -34,6 +36,10 @@ const Channels = (props) => {
         }
     },[!props.channel ? channelsState : null])
 
+    useEffect(() => {
+        AOS.init();
+        AOS.refresh();
+    });
 
     const openModal = () => {
         setModalOpen(true);
@@ -130,7 +136,7 @@ const Channels = (props) => {
                 </span>
             </Menu.Item>
         </Menu.Menu>
-        <Modal open={modalOpen} onClose={closeModal} className="channelModal">
+        <Modal data-aos="zoom-in" open={modalOpen} onClose={closeModal} className="channelModal">
             <Modal.Header>
                 Create Channel
             </Modal.Header>

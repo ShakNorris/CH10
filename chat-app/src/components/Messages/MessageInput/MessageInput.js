@@ -1,5 +1,5 @@
 import React, {useState, createRef} from 'react';
-import {Segment,Header,Icon,Input,Button} from 'semantic-ui-react'
+import {Segment,Header,Icon,Input,Button, Modal,Image} from 'semantic-ui-react'
 import './MessageInput.css'
 import fire from '../../../config/firebase'
 import firebase from 'firebase'
@@ -17,6 +17,13 @@ const MessageInput = (props) =>{
     const [showEmojis,setShowEmojis] = useState(false);
     const [message,setMessage] = useState("")
     const [fileDialog,setFileDialog] = useState(false)
+
+    const API_KEY = "6CCRGHRABll6ebZeCrx4YWekz1Fjy8Sf";
+    const GIPHY_API = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&limit=20&q=`;
+    const [gifSearch,setGifSearch] = useState("");
+    const [gifs, setGifs] = useState([]);
+    const [gifLoading,setGifLoading] = useState(false);
+    const [gifModal,setGifModal] = useState(false);
 
     const createMessageInfo = (downloadUrl) =>{
         return{
@@ -72,7 +79,7 @@ const MessageInput = (props) =>{
     };
 
     const uploadImage = (file,type) => {
-        const filePath = `chat/images/${uuidv4()}.jpg`
+        const filePath = `chat/images/${uuidv4()}`
         storageRef.child(filePath).put(file,{type : type})
         .then((data) => {
             data.ref.getDownloadURL()
@@ -94,12 +101,114 @@ const MessageInput = (props) =>{
         setMessage(message + emojiObject.emoji)
     };
 
+    const displayEmojiBox = () =>{
+        if(showEmojis){
+            return <Picker onEmojiClick={onEmojiClick} />
+        }
+    }
+
+    const openModal = () => {
+        setGifs([]);
+        setGifModal(true);
+    }
+
+    const closeModal = () => {
+        setGifModal(false);
+    }
+
+    const searchGif = () => {
+        setGifs([]);
+        if(gifSearch.length > 0){
+            setGifLoading(true);
+            fetch(GIPHY_API+gifSearch)
+            .then((res)=>{
+                setGifLoading(false);
+                return res.json();
+            })
+            .then((result)=>{
+                setGifs(result.data.map((gif=>{
+                    return gif.images.fixed_height.url;
+                })));
+            })
+            .catch(()=>{
+                setGifLoading(false);
+            })
+        }
+        setGifSearch("");
+    }
+
+    const handleGifSearch = (e) => {
+        if (e.which === 13) {
+            searchGif();
+        }
+    }
+
+    const sendGif =  async (e,type) => {
+        e.preventDefault();
+        var FileUrl = e.target.src;
+        let file = await fetch(FileUrl).then(r => r.blob()).
+        then(blobFile => new File([blobFile], "fileNameGoesHere", { type: "image/gif" }));
+        const filePath = `chat/images/${uuidv4()}`
+        storageRef.child(filePath).put(file)
+        .then((data) => {
+            data.ref.getDownloadURL()
+            .then((url)=> sendMessage(url))
+        })
+        .catch((err)=> console.log(err));
+        closeModal();
+    }
+
+    const displayGifs = () =>{
+        return(
+            <>
+            <div className="gifHeader">
+                <Input type="text"
+                placeholder="Search GIPHY"
+                value={gifSearch}
+                onChange={(e)=>setGifSearch(e.target.value)}
+                onKeyPress={handleGifSearch}
+                ></Input>
+                <Button onClick={searchGif}>Search</Button>
+            </div>
+            <div className="gifResult">
+                <div className="gifList">
+                {
+                    gifs.map((gif)=>{
+                        return(
+                            <div className="gifItem">
+                                <Image onClick={sendGif} src={gif}/>
+                            </div>
+                        )
+                    })
+                }
+                </div>
+            </div>
+            </>
+        )
+    }
+
+
     return <Segment className="InputSegment">
         <div className="emoji-toggler">
             <Button onClick={handleShowEmojis}><InsertEmoticonIcon className="emoji"/></Button>
         </div>
+        <div className="gif-toggler">
+            <Button onClick={openModal}><img src={process.env.PUBLIC_URL + '/GifIcon.png'}/></Button>
+        </div>
+        <Modal basic open={gifModal} onClose={closeModal} className="gifModal">
+            <Modal.Actions className="gifButton">
+                <Button onClick={closeModal}>
+                    <Icon name="remove" />
+                </Button>
+            </Modal.Actions>
+            <div data-aos="zoom-in">
+                <Modal.Content className="gifContent">
+                    {displayGifs()}
+                </Modal.Content>
+            </div>
+        </Modal>
         <div className="emoji-box">
-            {showEmojis && <Picker onEmojiClick={onEmojiClick} />}
+            {displayEmojiBox()}
         </div>
         <Input
         onChange={MessageChange}

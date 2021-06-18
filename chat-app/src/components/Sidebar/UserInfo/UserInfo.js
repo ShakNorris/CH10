@@ -1,8 +1,10 @@
-import React from 'react';
-import {Grid,Image,Header,Dropdown} from 'semantic-ui-react'
+import React,{useState,useEffect} from 'react';
+import {Grid,Image,Header, Icon, Modal,Form, Button} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import './UserInfo.css'
 import fire from '../../../config/firebase';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const getDropDown = () =>{
     return[{
@@ -16,6 +18,21 @@ const signOut = () =>{
 }
 
 const UserInfo = (props) =>{
+    const [modalOpen,setModalOpen] = useState(false)
+
+    const openModal = () => {
+        setModalOpen(true);
+    }
+
+    const closeModal = () => {
+        setModalOpen(false);
+    }
+
+    useEffect(() => {
+        AOS.init();
+        AOS.refresh();
+    });
+
     if(props.user){
         return(
             <div className="UserInfo">
@@ -28,14 +45,29 @@ const UserInfo = (props) =>{
                 <Grid.Column>
                     <Grid.Row className="userInfo-row">
                         <Header inverted as="h4" className="displayUser">
-                            <Dropdown icon={null}
-                            trigger={
-                                <span className="userInfo">
+                            <div className="user">
+                                <span onClick={openModal} className="userInfo">
                                     <Image src={props.user.photoURL}/>
                                     <p>{props.user.displayName}</p>
                                 </span>
-                            } options={getDropDown()}>
-                            </Dropdown>
+                                <Modal data-aos="zoom-in" open={modalOpen} onClose={closeModal} className="channelModal">
+                                    <Modal.Header>
+                                        User Info
+                                    </Modal.Header>
+                                    <Modal.Content>
+                                        <Image src={props.user.photoURL}/>
+                                        <p>{props.user.displayName}</p>
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                        <Button onClick={signOut} className="modalButton">
+                                            Log Out
+                                        </Button>
+                                        <Button onClick={closeModal} className="modalButton">
+                                            <Icon name="remove" />Close
+                                        </Button>
+                                    </Modal.Actions>
+                                </Modal>
+                            </div>
                         </Header>
                     </Grid.Row>
                 </Grid.Column>
