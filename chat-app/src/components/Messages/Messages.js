@@ -16,8 +16,6 @@ const Messages = (props) => {
     const [searchTermState,setSearchTermState] = useState("")
     let divRef = useRef()
 
-    console.log(props.channel)
-
     useEffect(()=>{
         if(props.channel){
             setMessages([])
@@ -108,7 +106,8 @@ const Messages = (props) => {
         isPrivateChat={props.channel?.isPrivateChat} 
         searchTermChange={searchTermChange} 
         channelName={props.channel?.name}
-        userPhoto={props.channel?.photoURL} 
+        userPhoto={props.channel?.photoURL}
+        userID = {props.channel?.bio} 
         channelDescripiton = {props.channel?.description}
         uniqueUsers={uniqueUsersCount()}/>
     <Segment class="messageContent">

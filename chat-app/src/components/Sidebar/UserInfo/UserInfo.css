@@ -30,28 +30,63 @@
     display:flex;
     flex-wrap: wrap;
 }
-.userInfoModal{
-    display:inline;
+
+.userModal{
+    width:500px !important;
 }
-.userInfoModal img{
-    width:120px;
-    border-radius:60px;
+.userModal .ui.button{
+    background: #ffd900 !important;
+    color:white;
+}
+.userInfoModal{
+    display:inline-block;
+}
+input[type=image]{
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    width:115px;
+    border: none; /* <-- This thing here */
+    border-radius:60px !important;
     display:inline-block !important;
+    vertical-align: middle;
+}
+
+input[type=image]:focus{
+    outline:none !important;
+}
+
+.userImage{
+    width:120px;
+    border: none;
+    border-radius:60px !important;
+    display:inline-block !important;
+    vertical-align: middle;
 }
 .userInfoModal p{
     display:inline-block !important;
-    margin-left:8px; 
+    margin-left:10px; 
+    margin-top:25px;
     font-size:21px;
     color:black;
     font-weight:bold;
+    vertical-align: middle;
 }
-.userInfoModal p:nth-child(3){
+.userInfoModal p:nth-child(4){
     margin-top:10px;
+    margin-left:0px;
+    margin-bottom:0px;
     display:block !important;
     font-size:15px;
 }
 .userInfoModal textarea{
     display: block;
     width:100% !important;
-    height:200px;
+    height:150px;
+    border: 1px solid #ffd900;
+    padding:10px;
+	border-radius: 5px;
+    resize:none;
+}
+.userInfoModal textarea:focus{
+    outline:none !important;
 }

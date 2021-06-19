@@ -5,22 +5,20 @@ import './UserInfo.css'
 import fire from '../../../config/firebase';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import {v4 as uuidv4} from 'uuid'
+import Mime from 'mime-types'
 import { setUser } from '../../../store/actions';
 
-
-const getDropDown = () =>{
-    return[{
-        key: 'logout',
-        text:<span onClick={signOut}>Log Out</span>
-    }]
-}
 
 const signOut = () =>{
     return fire.auth().signOut();
 }
 
 const UserInfo = (props) =>{
+    const acceptedPhotoTypes = ["image/png","image/jpeg","image/jpg"]
+
     let usersRef = fire.database().ref('users');
+    const storageRef = fire.storage().ref();
 
     const [modalOpen,setModalOpen] = useState(false)
     let userBio = "";
@@ -60,6 +58,24 @@ const UserInfo = (props) =>{
         }
     }
 
+    const triggerUpload = () =>{
+        document.getElementById("ImageChange").click()
+    }
+
+    const ChangePicture = (e) => {
+        const file = e.target.files[0];
+        if(file && acceptedPhotoTypes.includes(Mime.lookup(file.name))){
+            const filePath = `chat/profilePics/${uuidv4()}`;
+            storageRef.child(filePath).put(file).
+            then((data)=>{
+                data.ref.getDownloadURL()
+                .then((url)=>props.user.updateProfile({
+                    photoURL: url
+                }));
+            })
+        }
+    }
+
     if(props.user){
         return(
             <div className="UserInfo">
@@ -77,12 +93,13 @@ const UserInfo = (props) =>{
                                     <Image src={props.user.photoURL}/>
                                     <p>{props.user.displayName}</p>
                                 </span>
-                                <Modal data-aos="zoom-in" open={modalOpen} onClose={closeModal} className="channelModal">
+                                <Modal data-aos="zoom-in" open={modalOpen} onClose={closeModal} className="userModal">
                                     <Modal.Header>
                                         User Info
                                     </Modal.Header>
                                     <Modal.Content className="userInfoModal">
-                                        <Image src={props.user.photoURL}/>
+                                    <input classname="userImage" type="image" src={props.user.photoURL} onClick={triggerUpload}/>
+                                    <input type="file" id="ImageChange" style={{display:'none'}} onChange={ChangePicture}/>
                                         <p>{props.user.displayName}</p>
                                         <p>Bio</p>
                                         <textarea onChange={BioChange} onKeyPress={handleChangeBio}>{userBio}</textarea>
