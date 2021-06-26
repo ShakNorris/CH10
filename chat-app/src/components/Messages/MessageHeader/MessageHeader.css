@@ -32,3 +32,43 @@
     user-select: none;
     cursor:pointer;
 }
+.userInfoModal .ui.image{
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    width:115px;
+    border: none;
+    border-radius:60px !important;
+    display:inline-block !important;
+    vertical-align: middle;
+}
+
+.userCount{
+    cursor:pointer !important;
+    -webkit-user-select: none;      
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.userList .member{
+    margin-bottom:10px;
+}
+
+.userList .member  .ui.image{
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    width:80px;
+    border: none;
+    border-radius:60px !important;
+    display:inline-block !important;
+    vertical-align: middle;
+}
+.userList .member p{
+    display:inline-block !important;
+    margin-left:10px; 
+    margin-top:25px;
+    font-size:21px;
+    color:black;
+    font-weight:bold;
+    vertical-align: middle;
+}

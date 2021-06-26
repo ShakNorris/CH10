@@ -71,7 +71,7 @@ input[type=image]:focus{
     font-weight:bold;
     vertical-align: middle;
 }
-.userInfoModal p:nth-child(4){
+.userInfoModal .userBio{
     margin-top:10px;
     margin-left:0px;
     margin-bottom:0px;

@@ -1,10 +1,24 @@
 import React,{useState} from 'react';
-import {Segment,Header,Icon,Input,Image,Modal,Button} from 'semantic-ui-react'
+import {Segment,Header,Icon,Input,Image,Modal,Button,Menu} from 'semantic-ui-react'
+import fire from '../../../config/firebase'
 import './MessageHeader.css'
 
 const MessageHeader = (props) =>{
 
+    const channelsRef = fire.database().ref("channels");
+    let usersRef = fire.database().ref('users');
+    let members = [];
+
+    console.log(props.channelID);
+
+    channelsRef.child(props.channelID).on('value',snap=>{
+        members = Object.keys(snap.val().members)
+    })
+
+    console.log(members);
+
     const [modalOpen,setModalOpen] = useState(false)
+    const [userModal,setUserModal] = useState(false)
 
     const openModal = () => {
         setModalOpen(true);
@@ -13,6 +27,41 @@ const MessageHeader = (props) =>{
 
     const closeModal = () => {
         setModalOpen(false);
+    }
+
+    const openUserModal = () => {
+        setUserModal(true);
+    }
+
+    const closeUserModal = () => {
+        setUserModal(false);
+    }
+
+    const displayUsers = () => {
+        let list = [];
+        usersRef.on('value',snap=>{
+            snap.forEach(function(childSnapshot) {
+               if(members.includes(childSnapshot.key)){
+                    console.log(childSnapshot.val().photoURL)
+                    console.log(childSnapshot.val().displayName)
+
+                    list.push(childSnapshot.val());
+                }
+            });
+        })
+
+        //for(var i=0;i<list.length;i++){
+            return (
+                <div>
+                 {list.map((item, index) => (
+                    <div class="member">
+                        <Image src={item.photoURL}/>
+                        <p>{item.displayName}</p>
+                    </div>
+                 ))}
+                </div>
+             );
+        //}
     }
 
     return <div className="msgHeader">
@@ -28,7 +77,7 @@ const MessageHeader = (props) =>{
                 name={props.favorite ? "star" : "star outline"}
                 color={props.favorite ? "yellow" : "black"}/>}
                 {!props.isPrivateChat && <div className="description">{props.channelDescripiton}</div>}
-                {!props.isPrivateChat && <Header.Subheader>{props.uniqueUsers} User{props.uniqueUsers === 1 ? "" : "s"}</Header.Subheader>}
+                {!props.isPrivateChat && <Header.Subheader className="userCount" onClick={openUserModal}>{members.length} User{props.uniqueUsers === 1 ? "" : "s"}</Header.Subheader>}
             </span>
         </Header>
         <Header floated="right">
@@ -40,15 +89,28 @@ const MessageHeader = (props) =>{
             onChange={props.searchTermChange}>
             </Input>
         </Header>
-        <Modal data-aos="zoom-in" open={modalOpen} onClose={closeModal} className="channelModal">
+
+        <Modal data-aos="zoom-in" open={modalOpen} onClose={closeModal} className="userModal">
             <Modal.Content className="userInfoModal">
                 <Image src={props.userPhoto}/>
                 <p>{props.channelName}</p>
-                <p>Bio</p>
+                <p className="userBio">About Me</p>
                 <textarea value={props.userID}></textarea>
             </Modal.Content>
             <Modal.Actions>
                 <Button onClick={closeModal} className="modalButton">
+                    <Icon name="remove" />Close
+                </Button>
+            </Modal.Actions>
+        </Modal>
+
+        <Modal data-aos="zoom-in" open={userModal} onClose={closeUserModal} className="userModal">
+            <Modal.Header>Users</Modal.Header>
+            <Modal.Content className="userList">
+                {displayUsers()}
+            </Modal.Content>
+            <Modal.Actions>
+                <Button onClick={closeUserModal} className="modalButton">
                     <Icon name="remove" />Close
                 </Button>
             </Modal.Actions>

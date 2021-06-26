@@ -69,9 +69,14 @@ const UserInfo = (props) =>{
             storageRef.child(filePath).put(file).
             then((data)=>{
                 data.ref.getDownloadURL()
-                .then((url)=>props.user.updateProfile({
-                    photoURL: url
-                }));
+                .then((url)=>{
+                    props.user.updateProfile({
+                        photoURL: url,
+                    })
+                    usersRef.child(props.user.uid).on('value',snap=>{
+                        snap.ref.update({photoURL: url}); 
+                    })
+                })
             })
         }
     }
@@ -101,7 +106,7 @@ const UserInfo = (props) =>{
                                     <input classname="userImage" type="image" src={props.user.photoURL} onClick={triggerUpload}/>
                                     <input type="file" id="ImageChange" style={{display:'none'}} onChange={ChangePicture}/>
                                         <p>{props.user.displayName}</p>
-                                        <p>Bio</p>
+                                        <p className="userBio">About Me</p>
                                         <textarea onChange={BioChange} onKeyPress={handleChangeBio}>{userBio}</textarea>
                                     </Modal.Content>
                                     <Modal.Actions>
