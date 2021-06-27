@@ -7,15 +7,8 @@ const MessageHeader = (props) =>{
 
     const channelsRef = fire.database().ref("channels");
     let usersRef = fire.database().ref('users');
-    let members = [];
+    let members = JSON.parse(window.sessionStorage.getItem("channelMembers"))
 
-    console.log(props.channelID);
-
-    channelsRef.child(props.channelID).on('value',snap=>{
-        members = Object.keys(snap.val().members)
-    })
-
-    console.log(members);
 
     const [modalOpen,setModalOpen] = useState(false)
     const [userModal,setUserModal] = useState(false)
@@ -42,26 +35,21 @@ const MessageHeader = (props) =>{
         usersRef.on('value',snap=>{
             snap.forEach(function(childSnapshot) {
                if(members.includes(childSnapshot.key)){
-                    console.log(childSnapshot.val().photoURL)
-                    console.log(childSnapshot.val().displayName)
-
                     list.push(childSnapshot.val());
                 }
             });
         })
 
-        //for(var i=0;i<list.length;i++){
-            return (
-                <div>
-                 {list.map((item, index) => (
+        return (
+            <div>
+                {list.map((item, index) => (
                     <div class="member">
                         <Image src={item.photoURL}/>
                         <p>{item.displayName}</p>
                     </div>
-                 ))}
-                </div>
-             );
-        //}
+                ))}
+            </div>
+        );
     }
 
     return <div className="msgHeader">

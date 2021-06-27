@@ -40,12 +40,14 @@ const Channels = (props) => {
     useEffect(()=>{
         if(channelsState.length > 0){
             props.selectChannel(channelsState[0])
+            setCurrentChannel(channelsState[0])
         }
     },[!props.channel ? channelsState : null])
 
     useEffect(()=>{
         if(props.user){
             props.selectChannel(channelsState[0])
+            setCurrentChannel(channelsState[0])
         }
     },[!props.channel ? channelsState : null])
 
@@ -153,6 +155,10 @@ const Channels = (props) => {
         ValidateUser(channel)
     }
 
+    if(currentChannel.members){
+        window.sessionStorage.setItem("channelMembers",JSON.stringify(Object?.keys(currentChannel.members)));
+    }
+
     const ValidateUser = (channel) =>{
         let Allowed = 0;
         const ChannelMembers= channelsRef.child(channel.id).child("members").child(props.user.uid);
@@ -175,8 +181,6 @@ const Channels = (props) => {
             }
         }
     }
-
-    console.log(currentChannel);
 
     const checkPrivate = (channel) => {
         let Allowed = 0;
