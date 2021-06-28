@@ -38,7 +38,6 @@ const MessageInput = (props) =>{
         }
     }
 
-    
     const sendMessage = (downloadUrl) =>{
         if(downloadUrl){
             messagesRef.child(props.channel.id)
@@ -86,6 +85,22 @@ const MessageInput = (props) =>{
             .then((url)=> sendMessage(url))
         })
         .catch((err)=> console.log(err))
+    }
+
+    const uploadVideo =  (file,type) => {
+        const filePath = `chat/videos/${uuidv4()}`;
+        storageRef.child(filePath).put(file,{type : type})
+        .then((data) => {
+            console.log(data.metadata.contentType)
+            data.ref.getDownloadURL()
+            .then((url)=> sendMessage(url))
+        })
+        .catch((err)=> console.log(err))
+    }
+
+    const uploadOtherFiles = (file) => {
+        const filePath = `chat/otherFiles/${uuidv4()}`
+        storageRef.child(filePath).put(file);
     }
 
     const handleShowEmojis = () => {
@@ -218,7 +233,7 @@ const MessageInput = (props) =>{
         labelPosition="right"
         fluid="true"
         onKeyPress={handleKeypress}></Input>
-        <FileUpload uploadImage={uploadImage} open={fileDialog} onClose={() => setFileDialog(false)}/>
+        <FileUpload uploadImage={uploadImage} uploadOtherFiles={uploadOtherFiles} uploadVideo={uploadVideo} open={fileDialog} onClose={() => setFileDialog(false)}/>
     </Segment>
 }
 

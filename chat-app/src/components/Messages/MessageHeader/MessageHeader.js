@@ -65,7 +65,7 @@ const MessageHeader = (props) =>{
                 name={props.favorite ? "star" : "star outline"}
                 color={props.favorite ? "yellow" : "black"}/>}
                 {!props.isPrivateChat && <div className="description">{props.channelDescripiton}</div>}
-                {!props.isPrivateChat && <Header.Subheader className="userCount" onClick={openUserModal}>{members.length} User{props.uniqueUsers === 1 ? "" : "s"}</Header.Subheader>}
+                {!props.isPrivateChat && <Header.Subheader className="userCount" onClick={openUserModal}>{members?.length} User{props.uniqueUsers === 1 ? "" : "s"}</Header.Subheader>}
             </span>
         </Header>
         <Header floated="right">
