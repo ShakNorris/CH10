@@ -24,6 +24,8 @@ const MessageInput = (props) =>{
     const [gifs, setGifs] = useState([]);
     const [gifLoading,setGifLoading] = useState(false);
     const [gifModal,setGifModal] = useState(false);
+    let file_type = "";
+    let file_name = "";
 
     const createMessageInfo = (downloadUrl) =>{
         return{
@@ -33,17 +35,21 @@ const MessageInput = (props) =>{
                 id : props.user.uid
             },
             content : message,
-            image : downloadUrl || "", 
+            image : downloadUrl || "",
+            fileType : file_type || "",
+            fileName : file_name || "", 
             timestamp : firebase.database.ServerValue.TIMESTAMP
         }
     }
 
     const sendMessage = (downloadUrl) =>{
-        if(downloadUrl){
+        if(downloadUrl && file_type != ""){
+            console.log(file_name);
             messagesRef.child(props.channel.id)
             .push().set(createMessageInfo(downloadUrl))
             .then(() => setMessage(""))
             .catch((err) => console.log(err))
+            file_type = "";
         }
     }
 
@@ -81,6 +87,8 @@ const MessageInput = (props) =>{
         const filePath = `chat/images/${uuidv4()}`
         storageRef.child(filePath).put(file,{type : type})
         .then((data) => {
+            console.log(data.metadata.contentType)
+            file_type = data.metadata.contentType
             data.ref.getDownloadURL()
             .then((url)=> sendMessage(url))
         })
@@ -92,6 +100,7 @@ const MessageInput = (props) =>{
         storageRef.child(filePath).put(file,{type : type})
         .then((data) => {
             console.log(data.metadata.contentType)
+            file_type = data.metadata.contentType
             data.ref.getDownloadURL()
             .then((url)=> sendMessage(url))
         })
@@ -100,7 +109,14 @@ const MessageInput = (props) =>{
 
     const uploadOtherFiles = (file) => {
         const filePath = `chat/otherFiles/${uuidv4()}`
-        storageRef.child(filePath).put(file);
+        file_name = file.name;
+        storageRef.child(filePath).put(file)
+        .then((data) => {
+            console.log(data.metadata)
+            file_type = data.metadata.contentType
+            data.ref.getDownloadURL()
+            .then((url)=> sendMessage(url))
+        })
     }
 
     const handleShowEmojis = () => {
@@ -166,6 +182,8 @@ const MessageInput = (props) =>{
         const filePath = `chat/images/${uuidv4()}`
         storageRef.child(filePath).put(file)
         .then((data) => {
+            console.log(data.metadata.contentType)
+            file_type = data.metadata.contentType
             data.ref.getDownloadURL()
             .then((url)=> sendMessage(url))
         })

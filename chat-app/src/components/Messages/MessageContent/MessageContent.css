@@ -49,4 +49,8 @@
     width:50px;
 }
 
+.sentFile{
+    font-size:16px !important;
+}
+
 .dimmer { background-color: rgba(0,0,0,0.9) !important}

@@ -32,7 +32,7 @@ const FileUpload = (props) =>
             props.onClose()
             setFile(null)
         }
-        else if(file && !acceptedVideoTypes.includes(Mime.lookup(file.name))){
+        else if(file && !acceptedVideoTypes.includes(Mime.lookup(file.name)) && !acceptedPhotoTypes.includes(Mime.lookup(file.name))){
             props.uploadOtherFiles(file);
             props.onClose();
             setFile(null);
