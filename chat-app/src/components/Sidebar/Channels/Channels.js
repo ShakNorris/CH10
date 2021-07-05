@@ -128,11 +128,11 @@ const Channels = (props) => {
                 name={channel.name}
                 onClick={()=> {props.selectChannel(channel);checkCurrentCh(channel);checkPrivate(channel)}}
                 active={props.channel && channel.id === props.channel.id && !props.channel.isFavorite}>
-                {(channel.password ? <span onClick={openPrivateModal} className="privateChannel"><Icon className="privateChannelIcon" name="lock"/>{channel.name}</span> : "# " + channel.name)}
                 <Notifications 
                     user={props.user} 
                     channel={props.channel} 
                     channelNotification={channel.id}
+                    displayName={(channel.password ? <span onClick={openPrivateModal} className="privateChannel"><Icon className="privateChannelIcon" name="lock"/>{channel.name}</span> : "# " + channel.name)}
                 />
                 </Menu.Item>
             })
