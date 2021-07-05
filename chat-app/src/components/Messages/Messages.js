@@ -12,7 +12,6 @@ const Messages = (props) => {
 
     const messagesRef = fire.database().ref("messages")
     const usersRef = fire.database().ref("users")
-    const channelsRef = fire.database().ref("channels")
     const [messages,setMessages] = useState([])
     const [searchTermState,setSearchTermState] = useState("")
 
@@ -105,6 +104,7 @@ const Messages = (props) => {
         <MessageHeader 
         favoriteChannel={favoriteChannel}
         favorite={isFavorite()}
+        channel= {props.channel}
         channelID = {props.channel?.id}
         isPrivateChat={props.channel?.isPrivateChat} 
         searchTermChange={searchTermChange} 

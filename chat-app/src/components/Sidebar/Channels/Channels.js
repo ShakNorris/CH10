@@ -29,6 +29,8 @@ const Channels = (props) => {
     useEffect(() => {
         channelsRef.on('child_added', (snap) => {
             setChannelsState((currentState) => {
+                checkMembers();
+                setCurrentChannel(currentState);
                 let updatedState = [...currentState];
                 updatedState.push(snap.val());             
                 return updatedState;
@@ -50,6 +52,10 @@ const Channels = (props) => {
             setCurrentChannel(channelsState[0])
         }
     },[!props.channel ? channelsState : null])
+
+    useEffect(()=>{
+        checkMembers();
+    })
 
     useEffect(() => {
         AOS.init();
@@ -115,20 +121,22 @@ const Channels = (props) => {
     }
 
     const displayChannels = () => {
-        return channelsState.map((channel)=>{
-            return <Menu.Item
-            key={channel.key}
-            name={channel.name}
-            onClick={()=> {props.selectChannel(channel);checkCurrentCh(channel);checkPrivate(channel)}}
-            active={props.channel && channel.id === props.channel.id && !props.channel.isFavorite}>
-            {(channel.password ? <span onClick={openPrivateModal} className="privateChannel"><Icon className="privateChannelIcon" name="lock"/>{channel.name}</span> : "# " + channel.name)}
-            <Notifications 
-                user={props.user} 
-                channel={props.channel} 
-                channelNotification={channel.id}
-            />
-            </Menu.Item>
-        })
+        if(channelsState.length > 0){
+            return channelsState.map((channel)=>{
+                return <Menu.Item
+                key={channel.key}
+                name={channel.name}
+                onClick={()=> {props.selectChannel(channel);checkCurrentCh(channel);checkPrivate(channel)}}
+                active={props.channel && channel.id === props.channel.id && !props.channel.isFavorite}>
+                {(channel.password ? <span onClick={openPrivateModal} className="privateChannel"><Icon className="privateChannelIcon" name="lock"/>{channel.name}</span> : "# " + channel.name)}
+                <Notifications 
+                    user={props.user} 
+                    channel={props.channel} 
+                    channelNotification={channel.id}
+                />
+                </Menu.Item>
+            })
+        }
     }
 
     const setLastVisited = (user,channel) => {
@@ -137,9 +145,15 @@ const Channels = (props) => {
         lastVisited.onDisconnect().set(firebase.database.ServerValue.TIMESTAMP)
     }
 
+    const checkMembers = () =>{
+        if(currentChannel?.members){
+            window.sessionStorage.setItem("channelMembers",JSON.stringify(Object?.keys(currentChannel.members)));
+        }
+    }
+
     const checkCurrentCh = (channel) => {
-        let userID = props.user?.uid;
         setCurrentChannel(channel);
+        checkMembers();
         const ChannelMembers= channelsRef.child(channel.id).child("members").child(props.user.uid);
 
         ChannelMembers.on('value',snap=>{
@@ -153,10 +167,6 @@ const Channels = (props) => {
         })
 
         ValidateUser(channel)
-    }
-
-    if(currentChannel.members){
-        window.sessionStorage.setItem("channelMembers",JSON.stringify(Object?.keys(currentChannel.members)));
     }
 
     const ValidateUser = (channel) =>{

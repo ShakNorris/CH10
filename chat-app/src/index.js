@@ -31,8 +31,6 @@ const Index = (props) => {
     })
   }, []);
 
-  console.log(props.currentUser);
-
   return( <>
   <AppLoader loading={props.loading && props.location.pathname === "/"} />
   <Switch>

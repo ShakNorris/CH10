@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useState} from 'react';
 import './Authentication.css'
 import Login from './Login';
 import fire from '../../config/firebase';
@@ -118,6 +118,7 @@ const Authentication = () => {
                 .updateProfile({
                     displayName: userState.userName,
                     photoURL: `http://gravatar.com/avatar/${getRandomInt(1000)}?d=identicon`,
+                    bio: userState.bio
                 })
                 .then(() => {
                     setIsLoading(false);
@@ -135,7 +136,7 @@ const Authentication = () => {
         userCollectionRef.child(createdUser.user.uid).set({
             displayName: createdUser.user.displayName,
             photoURL: createdUser.user.photoURL,
-            bio:"Nothing to see here — yet."
+            bio: "Nothing to see here — yet."
         })
             .then(() => {
                 setIsLoading(false);
@@ -157,7 +158,8 @@ const Authentication = () => {
             var user = result.user;
             userCollectionRef.child(user.uid).set({
                 displayName: user.displayName,
-                photoURL: user.photoURL
+                photoURL: user.photoURL,
+                bio: user.bio
             })
         }).catch((error) => {
             var errorCode = error.code;

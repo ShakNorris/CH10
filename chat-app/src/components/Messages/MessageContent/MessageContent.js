@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Comment, CommentAuthor, CommentContent, Image, Modal,Button,Input,Icon} from 'semantic-ui-react'
+import {Comment, Image, Modal,Button,Icon} from 'semantic-ui-react'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import './MessageContent.css'
@@ -36,18 +36,18 @@ const MessageContent = (props) =>{
         <Comment.Content>
             <div className="topContent">
                 <Comment.Author>{props.message.user.name}</Comment.Author>
-                <Comment.Metadata class="time">{timeAgo.format(props.message.timestamp)}</Comment.Metadata>
+                <Comment.Metadata className="time">{timeAgo.format(props.message.timestamp)}</Comment.Metadata>
             </div>
             <div className="sentContent">
-                {props.message.image && acceptedPhotoTypes.includes(props.message.fileType) && <Image onClick={openModal} onLoad={props.imageLoaded} src={props.message.image} />}
+                {props.message.image && acceptedPhotoTypes.includes(props.message.fileType) && <Image className="sentImage" onClick={openModal} onLoad={props.imageLoaded} src={props.message.image} />}
                 {props.message.image && acceptedVideoTypes.includes(props.message.fileType) && 
-                <video height="240">
+                <video height="280">
                     <source src={props.message.image} type="video/mp4"></source>
                 </video>
                 }
                 {props.message.image && !acceptedPhotoTypes.includes(props.message.fileType) && !acceptedVideoTypes.includes(props.message.fileType) &&
                 <Comment.Text>
-                    <a className="sentFile" href={props.message.image} target="_blank" download>
+                    <a className="sentFile" href={props.message.image} target="_blank" download={props.message.fileName}>
                         <Icon name="file alternate"/><span>{props.message.fileName}</span>
                     </a>
                 </Comment.Text>

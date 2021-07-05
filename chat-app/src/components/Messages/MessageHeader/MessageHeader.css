@@ -72,3 +72,15 @@
     font-weight:bold;
     vertical-align: middle;
 }
+
+.membersModal{
+    width:500px !important;
+}
+.membersModal .userList{
+    height:350px;
+    overflow-y: scroll;
+}
+.membersModal .ui.button{
+    background: #ffd900 !important;
+    color:white;
+}

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Grid,Image,Header, Icon, Modal,Form, Button, TextArea, Input} from 'semantic-ui-react'
+import {Grid,Image,Header, Icon, Modal, Button} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import './UserInfo.css'
 import fire from '../../../config/firebase';
@@ -7,7 +7,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import {v4 as uuidv4} from 'uuid'
 import Mime from 'mime-types'
-import { setUser } from '../../../store/actions';
 
 
 const signOut = () =>{
@@ -36,9 +35,9 @@ const UserInfo = (props) =>{
         AOS.refresh();
     });
 
-    if(props.user?.uid){
+    if(props.user){
         usersRef.child(props.user.uid).on('value',snap=>{
-            userBio = snap.val().bio;
+            userBio = snap.val()?.bio;
         })
     }
 

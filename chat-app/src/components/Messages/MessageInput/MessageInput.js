@@ -43,8 +43,7 @@ const MessageInput = (props) =>{
     }
 
     const sendMessage = (downloadUrl) =>{
-        if(downloadUrl && file_type != ""){
-            console.log(file_name);
+        if(downloadUrl && file_type !== ""){
             messagesRef.child(props.channel.id)
             .push().set(createMessageInfo(downloadUrl))
             .then(() => setMessage(""))
@@ -87,7 +86,6 @@ const MessageInput = (props) =>{
         const filePath = `chat/images/${uuidv4()}`
         storageRef.child(filePath).put(file,{type : type})
         .then((data) => {
-            console.log(data.metadata.contentType)
             file_type = data.metadata.contentType
             data.ref.getDownloadURL()
             .then((url)=> sendMessage(url))
@@ -99,7 +97,6 @@ const MessageInput = (props) =>{
         const filePath = `chat/videos/${uuidv4()}`;
         storageRef.child(filePath).put(file,{type : type})
         .then((data) => {
-            console.log(data.metadata.contentType)
             file_type = data.metadata.contentType
             data.ref.getDownloadURL()
             .then((url)=> sendMessage(url))
@@ -112,7 +109,6 @@ const MessageInput = (props) =>{
         file_name = file.name;
         storageRef.child(filePath).put(file)
         .then((data) => {
-            console.log(data.metadata)
             file_type = data.metadata.contentType
             data.ref.getDownloadURL()
             .then((url)=> sendMessage(url))
@@ -249,7 +245,7 @@ const MessageInput = (props) =>{
         value={message}
         label={actionButtons()}
         labelPosition="right"
-        fluid="true"
+        fluid={true}
         onKeyPress={handleKeypress}></Input>
         <FileUpload uploadImage={uploadImage} uploadOtherFiles={uploadOtherFiles} uploadVideo={uploadVideo} open={fileDialog} onClose={() => setFileDialog(false)}/>
     </Segment>

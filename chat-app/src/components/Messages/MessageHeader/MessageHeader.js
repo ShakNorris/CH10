@@ -1,21 +1,20 @@
 import React,{useState} from 'react';
-import {Segment,Header,Icon,Input,Image,Modal,Button,Menu} from 'semantic-ui-react'
+import {Segment,Header,Icon,Input,Image,Modal,Button} from 'semantic-ui-react'
 import fire from '../../../config/firebase'
 import './MessageHeader.css'
 
 const MessageHeader = (props) =>{
 
-    const channelsRef = fire.database().ref("channels");
     let usersRef = fire.database().ref('users');
     let members = JSON.parse(window.sessionStorage.getItem("channelMembers"))
-
 
     const [modalOpen,setModalOpen] = useState(false)
     const [userModal,setUserModal] = useState(false)
 
     const openModal = () => {
+        window.sessionStorage.setItem("channelMembers",JSON.stringify(Object?.keys(props.channel.members)));
+        members = JSON.parse(window.sessionStorage.getItem("channelMembers"))
         setModalOpen(true);
-        console.log(props.userID);
     }
 
     const closeModal = () => {
@@ -43,7 +42,7 @@ const MessageHeader = (props) =>{
         return (
             <div>
                 {list.map((item, index) => (
-                    <div class="member">
+                    <div className="member">
                         <Image src={item.photoURL}/>
                         <p>{item.displayName}</p>
                     </div>
@@ -65,7 +64,7 @@ const MessageHeader = (props) =>{
                 name={props.favorite ? "star" : "star outline"}
                 color={props.favorite ? "yellow" : "black"}/>}
                 {!props.isPrivateChat && <div className="description">{props.channelDescripiton}</div>}
-                {!props.isPrivateChat && <Header.Subheader className="userCount" onClick={openUserModal}>{members?.length} User{props.uniqueUsers === 1 ? "" : "s"}</Header.Subheader>}
+                {!props.isPrivateChat && <Header.Subheader className="userCount" onClick={openUserModal}>Members</Header.Subheader>}
             </span>
         </Header>
         <Header floated="right">
@@ -92,7 +91,7 @@ const MessageHeader = (props) =>{
             </Modal.Actions>
         </Modal>
 
-        <Modal data-aos="zoom-in" open={userModal} onClose={closeUserModal} className="userModal">
+        <Modal data-aos="zoom-in" open={userModal} onClose={closeUserModal} className="membersModal">
             <Modal.Header>Users</Modal.Header>
             <Modal.Content className="userList">
                 {displayUsers()}

@@ -13,11 +13,6 @@ class App extends Component {
           <Grid.Column className="mainPanel">
             <Messages/>
           </Grid.Column>
-          {/* <Grid.Column>
-            <span width={1}>
-
-            </span>
-          </Grid.Column> */}
         </Grid>
       </div>
     );

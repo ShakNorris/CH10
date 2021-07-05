@@ -106,7 +106,7 @@ const PrivateChat = (props) => {
 
     return(
         <div className="usersDisplay">
-            <Menu.Menu style={{marginTop: '35px;'}}>
+            <Menu.Menu>
                 <Menu.Item>
                     <span>
                         <Icon name="comment"/> Users [{users.length - 1}]
