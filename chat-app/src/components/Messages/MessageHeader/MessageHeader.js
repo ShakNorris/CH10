@@ -5,15 +5,14 @@ import './MessageHeader.css'
 
 const MessageHeader = (props) =>{
 
+    const channelsRef = fire.database().ref("channels");
     let usersRef = fire.database().ref('users');
-    let members = JSON.parse(window.sessionStorage.getItem("channelMembers"))
+    const [members,setMembers] = useState([]);
 
     const [modalOpen,setModalOpen] = useState(false)
     const [userModal,setUserModal] = useState(false)
 
     const openModal = () => {
-        window.sessionStorage.setItem("channelMembers",JSON.stringify(Object?.keys(props.channel.members)));
-        members = JSON.parse(window.sessionStorage.getItem("channelMembers"))
         setModalOpen(true);
     }
 
@@ -23,7 +22,17 @@ const MessageHeader = (props) =>{
 
     const openUserModal = () => {
         setUserModal(true);
+        checkMembers();
     }
+    
+    const checkMembers = () =>{
+        let CurrentMembers = [];
+        channelsRef.child(props.currentCh?.id).child("members").on('value',snap=>{
+            CurrentMembers = Object.keys(snap.val());
+        });
+        setMembers(CurrentMembers);
+    }
+
 
     const closeUserModal = () => {
         setUserModal(false);

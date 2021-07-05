@@ -104,7 +104,7 @@ const Messages = (props) => {
         <MessageHeader 
         favoriteChannel={favoriteChannel}
         favorite={isFavorite()}
-        channel= {props.channel}
+        currentCh= {props.channel}
         channelID = {props.channel?.id}
         isPrivateChat={props.channel?.isPrivateChat} 
         searchTermChange={searchTermChange} 

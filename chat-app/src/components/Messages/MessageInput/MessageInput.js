@@ -24,6 +24,8 @@ const MessageInput = (props) =>{
     const [gifs, setGifs] = useState([]);
     const [gifLoading,setGifLoading] = useState(false);
     const [gifModal,setGifModal] = useState(false);
+    const [closeEmoji,setcloseEmoji] = useState(false);
+    const [closeGif,setCloseGif] = useState(false);
     let file_type = "";
     let file_name = "";
 
@@ -135,12 +137,16 @@ const MessageInput = (props) =>{
     }
 
     const openModal = () => {
+        setCloseGif(true);
+        setcloseEmoji(true);
         setGifs([]);
         setGifModal(true);
     }
 
     const closeModal = () => {
         setGifModal(false);
+        setCloseGif(false);
+        setcloseEmoji(false);
     }
 
     const searchGif = () => {
@@ -178,7 +184,6 @@ const MessageInput = (props) =>{
         const filePath = `chat/images/${uuidv4()}`
         storageRef.child(filePath).put(file)
         .then((data) => {
-            console.log(data.metadata.contentType)
             file_type = data.metadata.contentType
             data.ref.getDownloadURL()
             .then((url)=> sendMessage(url))
@@ -219,10 +224,10 @@ const MessageInput = (props) =>{
 
     return <Segment className="InputSegment">
         <div className="emoji-toggler">
-            <Button onClick={handleShowEmojis}><InsertEmoticonIcon className="emoji"/></Button>
+            {(closeEmoji == false) && <Button onClick={handleShowEmojis}><InsertEmoticonIcon className="emoji"/></Button>}
         </div>
         <div className="gif-toggler">
-            <Button onClick={openModal}><img src={process.env.PUBLIC_URL + '/GifIcon.png'}/></Button>
+            {(closeGif == false) && <Button onClick={openModal}><img src={process.env.PUBLIC_URL + '/GifIcon.png'}/></Button>}
         </div>
         <Modal basic open={gifModal} onClose={closeModal} className="gifModal">
             <Modal.Actions className="gifButton">

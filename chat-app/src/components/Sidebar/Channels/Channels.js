@@ -173,8 +173,7 @@ const Channels = (props) => {
         let Allowed = 0;
         const ChannelMembers= channelsRef.child(channel.id).child("members").child(props.user.uid);
         ChannelMembers.on('value',snap=>{
-            Allowed = snap.val().allowed;
-            console.log(snap.val().allowed);
+            Allowed = snap.val()?.allowed;
         })
         if(channel.password){
             if(Allowed == 0){
@@ -209,7 +208,6 @@ const Channels = (props) => {
     const handlePasswordInput = (e) => {
         let target = e.target
         setChannelPassword((currentState) =>{
-            console.log(currentState)
             let updatedState = {...currentState};
             updatedState[target.name] = target.value;
             return updatedState;
@@ -217,8 +215,6 @@ const Channels = (props) => {
     }
 
     const JoinPrivate = () =>{
-        console.log(channelPassword.password);
-        console.log(currentChannel.password);
         if(channelPassword.password == currentChannel.password){
             selectChannel(currentChannel);
             setChannelPassword("");
